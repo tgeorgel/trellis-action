@@ -41,9 +41,9 @@ jobs:
   my_job:
   ...
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
-      - uses: webfactory/ssh-agent@v0.1.1
+      - uses: webfactory/ssh-agent@v0.5.4
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh-auth-sock: ${{ github.workspace }}/ssh-auth.sock
