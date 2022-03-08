@@ -8,8 +8,7 @@ const verbose = core.getInput('verbose') == 'true' ? '-vvv' : false;
 const site_path = core.getInput('site_path');
 const trellis_path = core.getInput('trellis_path');
 
-// TODO:
-// Switch to build in core.debug for debugging. 
+// TODO: Switch to build in core.debug for debugging.
 if(verbose) {
     console.log(`
 Verbose: ${core.getInput('verbose')} (${verbose})
@@ -19,7 +18,7 @@ Trellis Path: ${trellis_path}
 
     Object.keys(process.env).forEach(function(key) {
         let value = process.env[key];
-        console.log(key + ': ' + value); 
+        console.log(key + ': ' + value);
     });
 }
 
@@ -65,7 +64,7 @@ try {
     if(site_name) {
         let site = wordpress_sites.wordpress_sites[site_name];
         deploy_site(site_name, site, site_env)
-    } else { 
+    } else {
         const site_key = core.getInput('site_key', {required: true});
         const site_value = core.getInput('site_value', {required: true});
 
@@ -87,7 +86,7 @@ if(verbose) {
     try {
         fs.readdirSync(process.env['YARN_CACHE_FOLDER'] + '/v4').forEach(file => {
             console.log(file);
-        });    
+        });
     } catch (error) {
         console.log('No yarn cache files found: '+error.message);
     }
@@ -105,7 +104,7 @@ function deploy_site(site_name, site, site_env){
         } catch (error) {
             core.error(`Symlinkin ${site_path} to ${ansible_site_path} failed: ${error.message}`);
         }
-    } 
+    }
 
     core.group(`Deploy Site ${site_name}`, async () => {
         const deploy = await run_playbook(site_name, site_env, process.env['GITHUB_SHA']);
@@ -117,10 +116,10 @@ function run_playbook(site_name, site_env, sha) {
     try {
         const child = child_process.execSync('ansible-playbook', ['deploy.yml',`-e site=${site_name}`, `-e env=${site_env}`, `-e site_version=${sha} ${verbose}`]);
 
-        if( child.stdout ) 
+        if( child.stdout )
             console.log(`${child.stdout}`);
 
-        if( child.stderr ) 
+        if( child.stderr )
             console.log(`${child.stderr}`);
 
         if( child.status != 0)

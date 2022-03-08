@@ -1,24 +1,24 @@
 name: Publish Docker image to GitHub Package Registry
 on: push
 
-jobs: 
+jobs:
   build:
     name: Publish to GitHub Package Registry
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+      - uses: actions/checkout@v1
 
-    - name: Publish to GitHub Package Registry
-      uses: elgohr/Publish-Docker-Github-Action@master
-      id: docker
-      with:
-        name: xilonz/trellis-action/ansible-sage
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-        registry: docker.pkg.github.com
+      - name: Publish to GitHub Package Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        id: docker
+        with:
+          name: xilonz/trellis-action/ansible-sage
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
 
-    - name: Results of publishing package
-      run: |
-        echo "The tag of the Docker Image is: $VAR1"
-      env:
-        VAR1: ${{ steps.docker.outputs.tag }}
+      - name: Results of publishing package
+        run: |
+          echo "The tag of the Docker Image is: $VAR1"
+        env:
+          VAR1: ${{ steps.docker.outputs.tag }}
