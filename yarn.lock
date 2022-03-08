@@ -7,10 +7,10 @@
   resolved "https://registry.yarnpkg.com/@actions/core/-/core-1.2.0.tgz#aa5f52b26c362c821d41557e599371a42f6c0b3d"
   integrity sha512-ZKdyhlSlyz38S6YFfPnyNgCDZuAF2T0Qv5eHflNWytPS8Qjvz39bZFMry9Bb/dpSnqWcNeav5yM2CTYpJeY+Dw==
 
-"@zeit/ncc@^0.20.5":
-  version "0.20.5"
-  resolved "https://registry.yarnpkg.com/@zeit/ncc/-/ncc-0.20.5.tgz#a41af6e6bcab4a58f4612bae6137f70bce0192e3"
-  integrity sha512-XU6uzwvv95DqxciQx+aOLhbyBx/13ky+RK1y88Age9Du3BlA4mMPCy13BGjayOrrumOzlq1XV3SD/BWiZENXlw==
+"@vercel/ncc@^0.33.3":
+  version "0.33.3"
+  resolved "https://registry.yarnpkg.com/@vercel/ncc/-/ncc-0.33.3.tgz#aacc6b3ea9f7b175e0c9a18c9b97e4005a2f4fcc"
+  integrity sha512-JGZ11QV+/ZcfudW2Cz2JVp54/pJNXbsuWRgSh2ZmmZdQBKXqBtIGrwI1Wyx8nlbzAiEFe7FHi4K1zX4//jxTnQ==
 
 argparse@^1.0.7:
   version "1.0.10"
