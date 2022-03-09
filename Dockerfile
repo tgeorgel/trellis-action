@@ -1,12 +1,36 @@
+# Precompile script + dependencies into a single file
+FROM willhallonline/ansible:2.12-alpine-3.15 as builder
+
+COPY ./ .
+
+RUN apk add --no-cache --virtual .build-deps \
+        nodejs \
+        npm \
+        yarn \
+    && rm -rf /var/cache/apk/* /tmp/*
+
+RUN mkdir -p dist && yarn install --silent --non-interactive
+
+RUN npx ncc build ./index.js
+
+# Build the image we publish
 FROM willhallonline/ansible:2.12-alpine-3.15
 
-COPY ./dist/index.js /index.js
+COPY --from=builder /ansible/dist/index.js /index.js
 
 # Basic Packages + Sage
 RUN apk add --no-cache --virtual .build-deps \
-        nodejs yarn rsync \
-        g++ make autoconf automake libtool nasm \
-        libpng-dev libjpeg-turbo-dev \
+        autoconf \
+        automake \
+        g++ \
+        libjpeg-turbo-dev \
+        libpng-dev \
+        libtool \
+        make \
+        nasm \
+        nodejs \
+        rsync \
+        yarn \
     && rm -rf /var/cache/apk/* /tmp/*
 
 # Basic smoke test
@@ -15,8 +39,5 @@ RUN apk add --no-cache --virtual .build-deps \
 #     echo 'python --version' && python --version && \
 #     echo 'ansible --version' && ansible --version && \
 #     echo 'rsync --version' && rsync --version
-
-# Dont use this, we have everything precompiled
-#RUN yarn install --production --silent --non-interactive
 
 ENTRYPOINT ["node", "/index.js"]
