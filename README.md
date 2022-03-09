@@ -214,7 +214,7 @@ As a note to my future self, in order to work on this repo:
 * Run `yarn install` to fetch dependencies
 * _hack hack hack_
 * `node index.js` (inputs are passed through `INPUT_` env vars)
-* Run `./node_modules/.bin/ncc build index.js` to update `dist/index.js`, which is the file actually run
+* Run `npx ncc build index.js` to update `dist/index.js`, which is the file actually run
 * Read [Creating a JavaScript action](https://help.github.com/en/articles/creating-a-javascript-action) if unsure.
 * Maybe update the README example when publishing a new version.
 
