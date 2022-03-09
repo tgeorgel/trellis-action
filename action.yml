@@ -1,4 +1,4 @@
-name: Trellis Deploy
+name: Trellis Deploy - Sage v10.x
 
 description: Deploy Trellis, Bedrock and Sage (optionally) via GitHub Actions
 
