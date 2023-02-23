@@ -33,6 +33,10 @@ RUN apk add --no-cache --virtual .build-deps \
         yarn \
     && rm -rf /var/cache/apk/* /tmp/*
 
+RUN ansible-galaxy collection install community.general
+RUN ansible-galaxy collection install community.crypto
+RUN ansible-galaxy collection install community.mysql
+
 # Basic smoke test
 # RUN echo 'node --version' && node --version && \
 #     echo 'yarn versions' && yarn versions && \
