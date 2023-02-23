@@ -49,7 +49,7 @@ inputs:
 
   group_vars:
     description: Group vars where sites are defined.
-    # defaults to `group_vars/${site_env}/wordpress_sites.yml` via JS
+    group_vars: false # defaults to `group_vars/${site_env}/wordpress_sites.yml` via JS
     required: false
 
   verbose:
@@ -69,7 +69,7 @@ inputs:
 runs:
   using: docker
 
-  image: docker://ghcr.io/jeffbyrnes/trellis-action:latest
+  image: docker://ghcr.io/tgeorgel/trellis-action:latest
 
   env:
     ANSIBLE_HOST_KEY_CHECKING: "false"
