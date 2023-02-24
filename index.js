@@ -1,4 +1,5 @@
 const core = require('@actions/core');
+const exec = require('@actions/exec');
 const child_process = require('child_process');
 const fs = require('fs');
 const yaml = require('js-yaml');
@@ -112,21 +113,24 @@ function deploy_site(site_name, site, site_env){
     });
 }
 
-function run_playbook(site_name, site_env, sha) {
+async function run_playbook(site_name, site_env, sha) {
     try {
         const command = `ansible-playbook deploy.yml -e site=${site_name} -e env=${site_env} -e site_version=${sha} ${verbose}`;
         console.log(`Running: ${command}`);
-        const child = child_process.execSync(command);
+        // const child = child_process.execSync(command);
 
-        if( child.stdout )
-            console.log(`${child.stdout}`);
-
-        if( child.stderr )
-            console.log(`${child.stderr}`);
-
-        if( child.status != 0)
-            if(child.error) core.setFailed(child.error.message);
-            else core.setFailed(`${child.stderr}`);
+        let output = ""
+        await exec.exec(command, null, {
+            listeners: {
+                stdout: function(data) {
+                    output += data.toString()
+                },
+                stderr: function(data) {
+                    output += data.toString()
+                }
+            }
+        })
+        core.setOutput("output", output)
     } catch (error) {
         core.setFailed('Running playook failed: '+ error.message);
     }
