@@ -1,10 +1,10 @@
 {
-  "name": "jeffbyrnes-action-trellis",
+  "name": "tgeorgel-action-trellis",
   "repository": "",
-  "description": "GitHub Action to deploy to trellis environmnet",
-  "version": "1.0.1",
+  "description": "GitHub Action to deploy to trellis environment",
+  "version": "1.1.2",
   "main": "index.js",
-  "author": "Jeff Byrnes <thejeffbyrnes@gmail.com>",
+  "author": "Thomas Goergel <thom.georgel@gmail.com>, Jeff Byrnes <thejeffbyrnes@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "@actions/core": "^1.1.0",

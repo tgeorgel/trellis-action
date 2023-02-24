@@ -200,7 +200,7 @@ If someone has a more elegant solution. Please PR!
 
 ### NodeJS version
 
-We’re using the `willhallonline/ansible:2.12-alpine-3.15` docker image, so NodeJS 16 is available.
+We’re using the `willhallonline/ansible:2.14-alpine-3.16` docker image, so NodeJS 16 is available.
 
 ### Python 3
 
