@@ -29,6 +29,7 @@ RUN apk add --no-cache --virtual .build-deps \
         make \
         nasm \
         nodejs \
+        npm \
         rsync \
         yarn \
     && rm -rf /var/cache/apk/* /tmp/*
