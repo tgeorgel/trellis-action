@@ -1,5 +1,5 @@
 # Precompile script + dependencies into a single file
-FROM willhallonline/ansible:2.13-alpine-3.16 as builder
+FROM willhallonline/ansible:2.18-alpine-3.18 as builder
 
 COPY ./ .
 
@@ -14,7 +14,7 @@ RUN mkdir -p dist && yarn install --silent --non-interactive
 RUN npx ncc build ./index.js
 
 # Build the image we publish
-FROM willhallonline/ansible:2.13-alpine-3.16
+FROM willhallonline/ansible:2.18-alpine-3.18
 
 COPY --from=builder /ansible/dist/index.js /index.js
 
