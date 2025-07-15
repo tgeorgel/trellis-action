@@ -3,7 +3,7 @@ ARG ALPINE_VERSION=3.18
 ARG ANSIBLE_VERSION=2.18
 
 # Precompile script + dependencies into a single file
-FROM willhallonline/ansible:${ANSIBLE_VERSION}-alpine-${ALPINE_VERSION} as builder
+FROM willhallonline/ansible:${ANSIBLE_VERSION}-alpine-${ALPINE_VERSION} AS builder
 
 COPY ./ .
 
@@ -17,9 +17,9 @@ RUN mkdir -p dist && yarn install --silent --non-interactive
 
 RUN npx ncc build ./index.js
 
-# Build the image we publish
 FROM node:${NODE_VERSION}-alpine AS node
 
+# Build the image we publish
 FROM willhallonline/ansible:${ANSIBLE_VERSION}-alpine-${ALPINE_VERSION}
 
 COPY --from=node /usr/lib /usr/lib
