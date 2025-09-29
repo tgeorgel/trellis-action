@@ -1,4 +1,4 @@
-name: Trellis Deploy - Node 16
+name: Trellis Deploy - Node 20
 
 description: Deploy Trellis, Bedrock and Sage (optionally) via GitHub Actions
 
