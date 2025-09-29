@@ -1,5 +1,4 @@
-name: Trellis Deploy - Node 20
-
+name: Trellis Deploy
 description: Deploy Trellis, Bedrock and Sage (optionally) via GitHub Actions
 
 branding:
@@ -49,7 +48,7 @@ inputs:
 
   group_vars:
     description: Group vars where sites are defined.
-    group_vars: false # defaults to `group_vars/${site_env}/wordpress_sites.yml` via JS
+    default: false
     required: false
 
   verbose:
@@ -66,11 +65,16 @@ inputs:
     default: ${{ github.workspace }}/.cache/yarn
     required: false
 
+  node_version:
+    description: Node version to use (e.g. 18, 20, 22)
+    default: "20"
+    required: false
+
 runs:
   using: docker
-  image: docker://ghcr.io/tgeorgel/trellis-action:1.4.0
+  image: docker://ghcr.io/tgeorgel/trellis-action:${{ github.action_ref }}-node${{ inputs.node_version }}
+
   env:
     ANSIBLE_HOST_KEY_CHECKING: "false"
-    ANSIBLE_STRATEGY_PLUGINS: /usr/lib/python3.6/site-packages/ansible_mitogen/plugins/strategy
     ANSIBLE_STRATEGY: ${{ inputs.ansible_strategy }}
     YARN_CACHE_FOLDER: ${{ inputs.yarn_cache }}
