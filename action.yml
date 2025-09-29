@@ -68,9 +68,7 @@ inputs:
 
 runs:
   using: docker
-
-  image: docker://ghcr.io/tgeorgel/trellis-action:latest
-
+  image: docker://ghcr.io/tgeorgel/trellis-action:1.4.0
   env:
     ANSIBLE_HOST_KEY_CHECKING: "false"
     ANSIBLE_STRATEGY_PLUGINS: /usr/lib/python3.6/site-packages/ansible_mitogen/plugins/strategy
