@@ -75,6 +75,21 @@ runs:
   steps:
     - run: |
         docker run \
+          -v ${{ github.workspace }}:${{ github.workspace }} \
+          -w ${{ github.workspace }} \
+          -e INPUT_ROLE_FILE="${{ inputs.role_file }}" \
+          -e INPUT_VAULT_PASSWORD="${{ inputs.vault_password }}" \
+          -e INPUT_VAULT_PASSWORD_FILE="${{ inputs.vault_password_file }}" \
+          -e INPUT_SITE_ENV="${{ inputs.site_env }}" \
+          -e INPUT_SITE_NAME="${{ inputs.site_name }}" \
+          -e INPUT_SITE_KEY="${{ inputs.site_key }}" \
+          -e INPUT_SITE_VALUE="${{ inputs.site_value }}" \
+          -e INPUT_SITE_PATH="${{ inputs.site_path }}" \
+          -e INPUT_TRELLIS_PATH="${{ inputs.trellis_path }}" \
+          -e INPUT_GROUP_VARS="${{ inputs.group_vars }}" \
+          -e INPUT_VERBOSE="${{ inputs.verbose }}" \
+          -e INPUT_ANSIBLE_STRATEGY="${{ inputs.ansible_strategy }}" \
+          -e INPUT_YARN_CACHE="${{ inputs.yarn_cache }}" \
           -e ANSIBLE_HOST_KEY_CHECKING=false \
           -e ANSIBLE_STRATEGY=${{ inputs.ansible_strategy }} \
           -e YARN_CACHE_FOLDER=${{ inputs.yarn_cache }} \
