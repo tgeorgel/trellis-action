@@ -1,5 +1,7 @@
 # Trellis Deploy GitHub Action
 
+*This is a fork of [Trellis Deploy](https://github.com/steenbergen-design/trellis-action) by [Steenbergen Design](https://steenbergen.design). This repository is a maintenance fork maintained by [Thomas Georgel](https://github.com/tgeorgel). It also support more feature, such as support for multiple node versions.*
+
 This action deploys your bedrock site to your trellis environment.
 This action will symlink site_local to their right place as defined in `wordpress_sites.yml`, so you're also covered when trellis and your bedrock setup are not in the same repo.
 
@@ -16,7 +18,7 @@ Check [`action.yml`](./action.yml) inputs for all `with` args available. You can
 
 ## File Structures
 
-[Trellis Deploy](https://github.com/steenbergen-design/trellis-action) comes with 2 different `main.yml` examples. They are expecting different Trellis and Bedrock structures.
+[Trellis Deploy](https://github.com/tgeorgel/trellis-action@v1.4.1) with 2 different `main.yml` examples. They are expecting different Trellis and Bedrock structures.
 
 ### Official
 
@@ -33,7 +35,7 @@ To install `main.yml`:
 
 1. Set up SSH keys, Ansible Vault password and commit Trellis changes described in the following sections
 1. In your repository, go to the _Settings > Secrets_ menu and create a new secret called `vault_pass`. Put the vault pass into the contents field.
-1. In your workflow definition file, add `steenbergen-design/trellis-action@v1`. See next example:
+1. In your workflow definition file, add `tgeorgel/trellis-action@v1.4.1`. See next example:
 
 ```yaml
 # .github/workflows/main.yml
@@ -48,11 +50,13 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh-auth-sock: ${{ github.workspace }}/ssh-auth.sock
 
-      - uses: steenbergen-design/trellis-action@v1
+      - uses: tgeorgel/trellis-action@v1.4.1
         with:
           vault_password: ${{ secrets.VAULT_PASS }}
+          vault_password_file: .vault_pass # optional, if you customized the vault password file name
           site_env: production
           site_name: example.com
+          node_version: 20 # default is 20, available versions are 18, 20, 22
 ```
 
 ### Seperated repo's
@@ -74,7 +78,7 @@ See: [roots/trellis#883 (comment)](https://github.com/roots/trellis/issues/883#i
 
 1. Set up SSH keys, Ansible Vault password and commit Trellis changes described in the following sections
 2. In your repository, go to the _Settings > Secrets_ menu and create a new secret called `vault_pass`. Put the vault pass into the contents field.
-3. In your workflow definition file, add `steenbergen-design/trellis-action@v1` and another checkout action for your trellis repo. See next example. The trellis action will move the site to its right directory, so there's no additional setup required.
+3. In your workflow definition file, add `tgeorgel/trellis-action@v1.4.1` and another checkout action for your trellis repo. See next example. The trellis action will move the site to its right directory, so there's no additional setup required.
 
 ```diff
     ...
@@ -85,14 +89,14 @@ See: [roots/trellis#883 (comment)](https://github.com/roots/trellis/issues/883#i
 +     with:
 +       repository: roots/trellis
 +       ref: master
-+       token: ${{ secrets.GIT_PAT }} #Your GitHub access token
++       token: ${{ secrets.GIT_PAT }} # Your GitHub access token
 +       path: repo-name/trellis
-+       fetch-depth: 1 
++       fetch-depth: 1
 
     - uses: webfactory/ssh-agent@v0.1.1
       with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          ssh-auth-sock: ${{ github.workspace }}/ssh-auth.sock 
+          ssh-auth-sock: ${{ github.workspace }}/ssh-auth.sock
     ...
 ```
 
@@ -163,8 +167,8 @@ The examples assume you have defined `vault_password_file = .vault_pass` in `ans
 To use another vault password filename:
 
 ```diff
-        - uses: steenbergen-design/trellis-action@v1
-          with: 
+        - uses: tgeorgel/trellis-action@v1.4.1
+          with:
             vault_password: ${{ secrets.vault_pass }}
 +           vault_password_file: myvaultfile.txt
             site_env: production
@@ -174,8 +178,8 @@ To use another vault password filename:
 Using [Ansible Vault](https://docs.ansible.com/ansible/playbooks_vault.html) to encrypt sensitive data is strongly recommended. In case you have a very strong reason not to use Ansible Vault, remove the var:
 
 ```diff
-        - uses: steenbergen-design/trellis-action@v1
-          with: 
+        - uses: tgeorgel/trellis-action@v1.4.1
+          with:
 -           vault_password: ${{ secrets.vault_pass }}
             site_env: production
             site_name: example.com
@@ -187,8 +191,8 @@ You can also choose to deploy multiple sites at once by searching for `site_key 
 If someone has a more elegant solution. Please PR!
 
 ```diff
-        - uses: steenbergen-design/trellis-action@v1
-          with: 
+        - uses: tgeorgel/trellis-action@v1.4.1
+          with:
             vault_password: ${{ secrets.vault_pass }}
             site_env: production
 -           site_name: example.com
@@ -218,8 +222,6 @@ As a note to my future self, in order to work on this repo:
 * Maybe update the README example when publishing a new version.
 
 ## Credits, Copyright and License
-
-[Trellis Action](https://github.com/steenbergen-design/trellis-action) is a [Steenbergen Design](https://steenbergen.design) project and maintained by Arjan Steenbergen
 
 Special thanks to [the Roots team](https://roots.io/about/) whose [Trellis](https://github.com/roots/trellis) make this project possible. Also special thanks to [TypistTech](https://github.com/TypistTech) where I got a lot if inspiration and got [parts](https://github.com/TypistTech/tiller-circleci) of this documentation from.
 
