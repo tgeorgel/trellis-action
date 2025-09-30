@@ -72,7 +72,7 @@ inputs:
 
 runs:
   using: docker
-  image: docker://ghcr.io/tgeorgel/trellis-action:${{ github.action_ref }}-node${{ inputs.node_version }}
+  image: docker://ghcr.io/tgeorgel/trellis-action:__VERSION__-node${{ inputs.node_version }}
 
   env:
     ANSIBLE_HOST_KEY_CHECKING: "false"
