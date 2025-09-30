@@ -12,13 +12,22 @@ This action will symlink site_local to their right place as defined in `wordpres
 - (Optional) Bedrock
 - (Optional) Sage [9.0.1](https://github.com/roots/sage/releases/tag/9.0.1) (node 10 compatible) or later
 
+## Versions
+
+| Version | Ansible Version | Node Version supported |
+|---------|-----------------|-------------------------|
+| 1.4.1   | 2.18            | 18, 20, 22 |
+| 1.3.0   | 2.18            | 18 |
+| 1.2.0   | 2.18            | 20 |
+| 1.1.x   | 2.13            | 20 |
+
 ## `with` args
 
 Check [`action.yml`](./action.yml) inputs for all `with` args available. You can also define `env` vars to use with ansible.
 
 ## File Structures
 
-[Trellis Deploy](https://github.com/tgeorgel/trellis-action@v1.4.1) with 2 different `main.yml` examples. They are expecting different Trellis and Bedrock structures.
+[Trellis Deploy](https://github.com/tgeorgel/trellis-action) with 2 different `main.yml` examples. They are expecting different Trellis and Bedrock structures.
 
 ### Official
 
@@ -53,10 +62,10 @@ jobs:
       - uses: tgeorgel/trellis-action@v1.4.1
         with:
           vault_password: ${{ secrets.VAULT_PASS }}
-          vault_password_file: .vault_pass # optional, if you customized the vault password file name
+          vault_password_file: .vault_pass # option, if you uses a different vault password file name
           site_env: production
           site_name: example.com
-          node_version: 20 # default is 20, available versions are 18, 20, 22
+          node_version: 20
 ```
 
 ### Seperated repo's
