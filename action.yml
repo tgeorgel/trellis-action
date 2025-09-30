@@ -78,5 +78,5 @@ runs:
           -e ANSIBLE_HOST_KEY_CHECKING=false \
           -e ANSIBLE_STRATEGY=${{ inputs.ansible_strategy }} \
           -e YARN_CACHE_FOLDER=${{ inputs.yarn_cache }} \
-          ghcr.io/tgeorgel/trellis-action:1.4.1-node${{ inputs.node_version }}
+          ghcr.io/tgeorgel/trellis-action:v1.4.1-node${{ inputs.node_version }}
       shell: bash
