@@ -115,7 +115,8 @@ function deploy_site(site_name, site, site_env){
 
 async function run_playbook(site_name, site_env, sha) {
     try {
-        const command = `ansible-playbook deploy.yml -e site=${site_name} -e env=${site_env} -e site_version=${sha} ${verbose}`;
+        const site_version = core.getInput('site_branch') || process.env['GITHUB_SHA'];
+        const command = `ansible-playbook deploy.yml -e site=${site_name} -e env=${site_env} -e site_version=${site_version} ${verbose}`;
         console.log(`Running: ${command}`);
         // const child = child_process.execSync(command);
 

@@ -36,6 +36,11 @@ inputs:
     description: Search the WordPress site by key == value
     required: false
 
+  site_branch:
+    description: The branch name to deploy (when read in wordpress_sites.yml using {{ site_version }})
+    required: false
+    default: ""
+
   site_path:
     description: Path where site lives
     default: ${{ github.workspace }}
@@ -79,6 +84,7 @@ runs:
         docker run \
           -v ${{ github.workspace }}:${{ github.workspace }} \
           -w ${{ github.workspace }} \
+          -e GITHUB_SHA=$GITHUB_SHA \
           -e ANSIBLE_HOST_KEY_CHECKING=false \
           -e ANSIBLE_STRATEGY=${{ inputs.ansible_strategy }} \
           -e YARN_CACHE_FOLDER=${{ inputs.yarn_cache }} \
@@ -91,6 +97,7 @@ runs:
           -e INPUT_SITE_KEY="${{ inputs.site_key }}" \
           -e INPUT_SITE_VALUE="${{ inputs.site_value }}" \
           -e INPUT_SITE_PATH="${{ inputs.site_path }}" \
+          -e INPUT_SITE_BRANCH="${{ inputs.site_branch }}" \
           -e INPUT_TRELLIS_PATH="${{ inputs.trellis_path }}" \
           -e INPUT_GROUP_VARS="${{ inputs.group_vars }}" \
           -e INPUT_VERBOSE="${{ inputs.verbose }}" \
