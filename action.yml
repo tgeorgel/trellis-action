@@ -71,10 +71,12 @@ inputs:
     required: false
 
 runs:
-  using: docker
-  image: docker://ghcr.io/tgeorgel/trellis-action:__VERSION__-node${{ inputs.node_version }}
-
-  env:
-    ANSIBLE_HOST_KEY_CHECKING: "false"
-    ANSIBLE_STRATEGY: ${{ inputs.ansible_strategy }}
-    YARN_CACHE_FOLDER: ${{ inputs.yarn_cache }}
+  using: composite
+  steps:
+    - run: |
+        docker run \
+          -e ANSIBLE_HOST_KEY_CHECKING=false \
+          -e ANSIBLE_STRATEGY=${{ inputs.ansible_strategy }} \
+          -e YARN_CACHE_FOLDER=${{ inputs.yarn_cache }} \
+          ghcr.io/tgeorgel/trellis-action:__VERSION__-node${{ inputs.node_version }}
+      shell: bash
