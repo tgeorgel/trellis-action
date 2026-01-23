@@ -116,6 +116,17 @@ See: [roots/trellis#883 (comment)](https://github.com/roots/trellis/issues/883#i
       with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh-auth-sock: ${{ github.workspace }}/ssh-auth.sock
+
+    - name: Run trellis deploy on ref=main
+        uses: tgeorgel/trellis-action@v1.4.1
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          vault_password: ${{ secrets.VAULT_PASS }}
+          vault_password_file: .vault_pass # optionnal, if you are using different vault password file name
++         site_path: ${{ github.workspace }}/site
+          site_env: production
+          site_name: example.com
+          node_version: 22
     ...
 ```
 
