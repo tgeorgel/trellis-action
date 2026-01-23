@@ -1,13 +1,15 @@
 # Trellis Deploy GitHub Action
 
-*This is a fork of [Trellis Deploy](https://github.com/steenbergen-design/trellis-action) by [Steenbergen Design](https://steenbergen.design). This repository is a maintenance fork maintained by [Thomas Georgel](https://github.com/tgeorgel). It also support more feature, such as support for multiple node versions.*
+This action deploys your trellis-managed site to your server.
+This action will symlink site_local to their right place as defined in `wordpress_sites.yml`, so you're also covered when trellis and your site does not live in the same repository.
 
-This action deploys your bedrock site to your trellis environment.
-This action will symlink site_local to their right place as defined in `wordpress_sites.yml`, so you're also covered when trellis and your bedrock setup are not in the same repo.
+If you're using the barebones trellis setup and not a fork of [roots/trellis](https://github.com/roots/trellis), consider using the official [Trellis CLI](https://github.com/roots/setup-trellis-cli) action instead.
+
+*This is a fork of the deprecated [Trellis Deploy](https://github.com/steenbergen-design/trellis-action) by [Steenbergen Design](https://steenbergen.design). This repository is a maintenance fork maintained by [Thomas Georgel](https://github.com/tgeorgel).*
 
 ## Requirements
 
-- [Trellis](https://github.com/roots/trellis) (pyhton 3 compatable)
+- [Trellis](https://github.com/roots/trellis) (python 3 compatible)
 - [Github Actions](https://github.com/features/actions)
 - (Optional) Bedrock
 - (Optional) Sage [9.0.1](https://github.com/roots/sage/releases/tag/9.0.1) (node 10 compatible) or later
@@ -52,32 +54,36 @@ jobs:
   my_job:
   ...
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v6
 
-      - uses: webfactory/ssh-agent@v0.5.4
+      - name: Setup SSH Agent
+        uses: webfactory/ssh-agent@v0.9.1
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh-auth-sock: ${{ github.workspace }}/ssh-auth.sock
 
-      - uses: tgeorgel/trellis-action@v1.4.1
+      - name: Run trellis deploy on ref=main
+        uses: tgeorgel/trellis-action@v1.4.1
+        if: ${{ github.ref == 'refs/heads/main' }}
         with:
           vault_password: ${{ secrets.VAULT_PASS }}
-          vault_password_file: .vault_pass # option, if you uses a different vault password file name
+          vault_password_file: .vault_pass # optionnal, if you are using different vault password file name
           site_env: production
           site_name: example.com
-          node_version: 20
+          node_version: 22
 ```
 
-### Seperated repo's
+### Separated repositories
 
-Some use a opinionated project structure:
+Some use an opinionated project structure:
 
-- separate Trellis and Bedrock as 2 different git repo
+- separate Trellis and Bedrock as 2 different git repositories
 - name the Bedrock-based WordPress site directory more creatively, i.e: `bedrock`
 
 ```plain
 example.com/      # → Root folder for the project
-├── bedrock/      # → A Bedrock-based WordPress site, directory name doesn't matter
+├── site/        # → A Bedrock-based WordPress site, directory name doesn't matter
 │   └── .git/     # Bedrock git repo
 └── trellis/      # → Clone of roots/trellis, directory name must be `trellis`
     └── .git/     # Trellis git repo
@@ -92,17 +98,21 @@ See: [roots/trellis#883 (comment)](https://github.com/roots/trellis/issues/883#i
 ```diff
     ...
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout repository
+      uses: actions/checkout@v6
+      with:
+        path: site
 
-+   - uses: actions/checkout@v1
++   - name: Checkout trellis
++     uses: actions/checkout@v6
 +     with:
 +       repository: roots/trellis
 +       ref: master
 +       token: ${{ secrets.GIT_PAT }} # Your GitHub access token
-+       path: repo-name/trellis
-+       fetch-depth: 1
++       path: trellis
 
-    - uses: webfactory/ssh-agent@v0.1.1
+    - name: Setup SSH Agent
+      uses: webfactory/ssh-agent@v0.9.1
       with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh-auth-sock: ${{ github.workspace }}/ssh-auth.sock
