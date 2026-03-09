@@ -71,8 +71,8 @@ inputs:
     required: false
 
   node_version:
-    description: Node version to use (e.g. 18, 20, 22)
-    default: "20"
+    description: Node version to use (e.g. 20, 22, 24)
+    default: "24"
     required: false
 
 runs:
@@ -104,5 +104,5 @@ runs:
           -e INPUT_ANSIBLE_STRATEGY="${{ inputs.ansible_strategy }}" \
           -e INPUT_YARN_CACHE="${{ inputs.yarn_cache }}" \
           -v $SSH_SOCK:$SSH_SOCK \
-          ghcr.io/tgeorgel/trellis-action:v1.4.1-node${{ inputs.node_version }}
+          ghcr.io/tgeorgel/trellis-action:v1.5.0-node${{ inputs.node_version }}
       shell: bash
