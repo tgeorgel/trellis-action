@@ -18,6 +18,7 @@ If you're using the barebones trellis setup and not a fork of [roots/trellis](ht
 
 | Version | Ansible Version | Node Version supported |
 |---------|-----------------|-------------------------|
+| 1.5.0   | 2.19            | 18, 20, 22, 24 |
 | 1.4.1   | 2.18            | 18, 20, 22 |
 | 1.3.0   | 2.18            | 18 |
 | 1.2.0   | 2.18            | 20 |
