@@ -21,7 +21,7 @@ jobs:
 
     strategy:
       matrix:
-        node_version: [18.20.4, 20.19.0, 22.10.0]
+        node_version: [18.20.8, 20.20.1, 22.22.1, 24.14.0]
 
     steps:
       - name: Checkout repository
@@ -34,6 +34,7 @@ jobs:
             18*) echo "ALPINE_VERSION=3.18" >> $GITHUB_ENV ;;
             20*) echo "ALPINE_VERSION=3.19" >> $GITHUB_ENV ;;
             22*) echo "ALPINE_VERSION=3.20" >> $GITHUB_ENV ;;
+            24*) echo "ALPINE_VERSION=3.21" >> $GITHUB_ENV ;;
             *) echo "ALPINE_VERSION=3.19" >> $GITHUB_ENV ;; # default
           esac
           # Extract major Node version

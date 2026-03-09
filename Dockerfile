@@ -1,6 +1,6 @@
-ARG NODE_VERSION=20.19.5
-ARG ALPINE_VERSION=3.19
-ARG ANSIBLE_VERSION=2.18
+ARG NODE_VERSION=24.14.0
+ARG ALPINE_VERSION=3.21
+ARG ANSIBLE_VERSION=2.19
 
 # Precompile script + dependencies into a single file
 FROM willhallonline/ansible:${ANSIBLE_VERSION}-alpine-${ALPINE_VERSION} AS builder
