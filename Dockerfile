@@ -1,5 +1,5 @@
 ARG NODE_VERSION=24.14.0
-ARG ALPINE_VERSION=3.21
+ARG ALPINE_VERSION=3.22
 ARG ANSIBLE_VERSION=2.19
 
 # Precompile script + dependencies into a single file
